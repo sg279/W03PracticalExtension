@@ -7,6 +7,7 @@ import interfaces.ILoyaltyCardOwner;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * This is a JUnit test class for the loyalty card ADT.
