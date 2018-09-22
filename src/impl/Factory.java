@@ -31,8 +31,8 @@ public final class Factory implements IFactory {
 
     @Override
     public ILoyaltyCardOwner makeLoyaltyCardOwner(String email, String name) {
-        // TODO Auto-generated method stub
-        return null;
+        LoyaltyCardOwner loyaltyCardOwner = new LoyaltyCardOwner(email, name);
+        return loyaltyCardOwner;
     }
 
     @Override

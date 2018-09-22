@@ -8,60 +8,140 @@ import interfaces.ILoyaltyCard;
 import interfaces.ILoyaltyCardOperator;
 import interfaces.ILoyaltyCardOwner;
 
+import java.util.ArrayList;
+
+
 /**
  * This class represents a simple loyalty card operator.
  *
  */
 public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyaltyCardOperator {
 
+    private ArrayList<LoyaltyCard> loyaltyCards = new ArrayList<LoyaltyCard>();
+
     @Override
     public void registerOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerAlreadyRegisteredException {
-        // TODO Auto-generated method stub
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+             ) {
+            if(loyaltyCard.getOwner().equals(loyaltyCardOwner)){
+                throw new OwnerAlreadyRegisteredException();
+            }
+        }
+        loyaltyCards.add(new LoyaltyCard(getFactory().makeLoyaltyCardOwner(loyaltyCardOwner.getEmail(), loyaltyCardOwner.getName())));
     }
 
     @Override
     public void unregisterOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerNotRegisteredException {
-        // TODO Auto-generated method stub
+        boolean ownerRegistered = false;
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            if(loyaltyCard.getOwner().equals(loyaltyCardOwner)){
+                loyaltyCards.remove(loyaltyCardOwner);
+                ownerRegistered = true;
+            }
+        }
+        if (!ownerRegistered){
+            throw new OwnerNotRegisteredException();
+        }
     }
 
     @Override
     public void processMoneyPurchase(String ownerEmail, int pence) throws OwnerNotRegisteredException {
-        // TODO Auto-generated method stub
+        boolean ownerRegistered = false;
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
+                loyaltyCard.addPoints(pence/100);
+                ownerRegistered = true;
+            }
+        }
+        if (!ownerRegistered){
+            throw new OwnerNotRegisteredException();
+        }
     }
 
     @Override
     public void processPointsPurchase(String ownerEmail, int pence)
             throws InsufficientPointsException, OwnerNotRegisteredException {
-        // TODO Auto-generated method stub
+        boolean ownerRegistered = false;
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
+                loyaltyCard.usePoints(pence);
+                ownerRegistered = true;
+            }
+        }
+        if (!ownerRegistered){
+            throw new OwnerNotRegisteredException();
+        }
     }
 
     @Override
     public int getNumberOfCustomers() {
-        // TODO Auto-generated method stub
-        return 0;
+        return loyaltyCards.size();
     }
 
     @Override
     public int getTotalNumberOfPoints() {
-        // TODO Auto-generated method stub
-        return 0;
+        int numberOfPoints = 0;
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            numberOfPoints+=loyaltyCard.getNumberOfPoints();
+        }
+        return numberOfPoints;
     }
 
     @Override
     public int getNumberOfPoints(String ownerEmail) throws OwnerNotRegisteredException {
-        // TODO Auto-generated method stub
-        return 0;
+        boolean ownerRegistered = false;
+        int numberOfPoints=0;
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
+                numberOfPoints=loyaltyCard.getNumberOfPoints();
+                ownerRegistered = true;
+            }
+        }
+        if (!ownerRegistered){
+            throw new OwnerNotRegisteredException();
+        }
+        return numberOfPoints;
     }
 
     @Override
     public int getNumberOfUses(String ownerEmail) throws OwnerNotRegisteredException {
-        // TODO Auto-generated method stub
-        return 0;
+        boolean ownerRegistered = false;
+        int numberOfUses=0;
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
+                numberOfUses=loyaltyCard.getNumberOfUses();
+                ownerRegistered = true;
+            }
+        }
+        if (!ownerRegistered){
+            throw new OwnerNotRegisteredException();
+        }
+        return numberOfUses;
     }
 
     @Override
     public ILoyaltyCardOwner getMostUsed() throws OwnerNotRegisteredException {
-        // TODO Auto-generated method stub
+        LoyaltyCard mostUsed = loyaltyCards.get(0);
+        for (LoyaltyCard loyaltyCard:
+                loyaltyCards
+                ) {
+            if(loyaltyCard.getNumberOfUses()>mostUsed.getNumberOfUses()){
+                mostUsed=loyaltyCard;
+            }
+        }
         return null;
     }
 

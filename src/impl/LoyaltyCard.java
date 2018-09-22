@@ -10,32 +10,48 @@ import interfaces.ILoyaltyCardOwner;
  */
 public class LoyaltyCard implements ILoyaltyCard {
 
+    private ILoyaltyCardOwner loyaltyCardOwner;
+    private int numberOfUses;
+    private int numberOfPoints;
+
     @Override
     public ILoyaltyCardOwner getOwner() {
-        // TODO Auto-generated method stub
-        return null;
+
+        return this.loyaltyCardOwner;
     }
 
     @Override
     public int getNumberOfUses() {
-        // TODO Auto-generated method stub
-        return 0;
+
+        return this.numberOfUses;
     }
 
     @Override
     public int getNumberOfPoints() {
-        // TODO Auto-generated method stub
-        return 0;
+
+        return this.numberOfPoints;
     }
 
     @Override
     public void addPoints(int points) {
-        // TODO Auto-generated method stub
+        this.numberOfPoints+=points;
     }
 
     @Override
     public void usePoints(int points) throws InsufficientPointsException {
-        // TODO Auto-generated method stub
+        if (points>numberOfPoints){
+            throw new InsufficientPointsException();
+        }
+        else{
+            this.numberOfPoints-=points;
+            this.numberOfUses++;
+        }
+    }
+
+    public LoyaltyCard(ILoyaltyCardOwner loyaltyCardOwner) {
+        this.loyaltyCardOwner=loyaltyCardOwner;
+        this.numberOfUses=0;
+        this.numberOfPoints=0;
     }
 
 }
