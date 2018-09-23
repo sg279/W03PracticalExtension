@@ -24,7 +24,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
         for (LoyaltyCard loyaltyCard:
                 loyaltyCards
              ) {
-            if(loyaltyCard.getOwner().equals(loyaltyCardOwner)){
+            if(loyaltyCard.getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
                 throw new OwnerAlreadyRegisteredException();
             }
         }
@@ -37,8 +37,8 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
         for (LoyaltyCard loyaltyCard:
                 loyaltyCards
                 ) {
-            if(loyaltyCard.getOwner().equals(loyaltyCardOwner)){
-                loyaltyCards.remove(loyaltyCardOwner);
+            if(loyaltyCard.getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
+                loyaltyCards.remove(loyaltyCard);
                 ownerRegistered = true;
             }
         }
