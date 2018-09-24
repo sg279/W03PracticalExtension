@@ -55,9 +55,9 @@ public class Tests extends AbstractFactoryClient {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
         }
         catch (OwnerAlreadyRegisteredException e){
-            //exceptionThrown = true;
-            assertTrue(true);
+            exceptionThrown = true;
         }
+        assertTrue(exceptionThrown);
     }
 
     @Test
@@ -73,6 +73,23 @@ public class Tests extends AbstractFactoryClient {
         catch (OwnerNotRegisteredException e){
             assertFalse(true);
         }
+    }
+
+    @Test
+    public void ownerNotRegistered() {
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.unregisterOwner(loyaltyCardOwner);
+        }
+        catch (OwnerNotRegisteredException e){
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void spendInsufficientpoints(){
+
     }
 
 }

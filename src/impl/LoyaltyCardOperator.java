@@ -34,11 +34,9 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     @Override
     public void unregisterOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerNotRegisteredException {
         boolean ownerRegistered = false;
-        for (LoyaltyCard loyaltyCard:
-                loyaltyCards
-                ) {
-            if(loyaltyCard.getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
-                loyaltyCards.remove(loyaltyCard);
+        for (int i = 0; i<loyaltyCards.size(); i++) {
+            if(loyaltyCards.get(i).getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
+                loyaltyCards.remove(i);
                 ownerRegistered = true;
             }
         }
