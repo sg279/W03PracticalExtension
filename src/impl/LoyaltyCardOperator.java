@@ -132,15 +132,20 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
 
     @Override
     public ILoyaltyCardOwner getMostUsed() throws OwnerNotRegisteredException {
-        LoyaltyCard mostUsed = loyaltyCards.get(0);
-        for (LoyaltyCard loyaltyCard:
-                loyaltyCards
-                ) {
-            if(loyaltyCard.getNumberOfUses()>mostUsed.getNumberOfUses()){
-                mostUsed=loyaltyCard;
-            }
+        if(loyaltyCards.size()==0){
+            throw new OwnerNotRegisteredException();
         }
-        return null;
+        else {
+            LoyaltyCard mostUsed = loyaltyCards.get(0);
+            for (LoyaltyCard loyaltyCard:
+                    loyaltyCards
+            ) {
+                if(loyaltyCard.getNumberOfUses()>mostUsed.getNumberOfUses()){
+                    mostUsed=loyaltyCard;
+                }
+            }
+            return mostUsed.getOwner();
+        }
     }
 
 }
