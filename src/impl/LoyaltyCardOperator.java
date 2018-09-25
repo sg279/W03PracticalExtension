@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyaltyCardOperator {
 
-    private ArrayList<LoyaltyCard> loyaltyCards = new ArrayList<LoyaltyCard>();
+    public ArrayList<LoyaltyCard> loyaltyCards = new ArrayList<LoyaltyCard>();
 
     @Override
     public void registerOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerAlreadyRegisteredException {

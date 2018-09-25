@@ -6,6 +6,7 @@ import common.OwnerAlreadyRegisteredException;
 import common.OwnerNotRegisteredException;
 import impl.LoyaltyCardOperator;
 import interfaces.ILoyaltyCardOwner;
+import interfaces.ILoyaltyCard;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ public class Tests extends AbstractFactoryClient {
     }
 
     @Test
-    public void addCard() {
+    public void registerOwner() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             assertTrue(loyaltyCardOperator.getNumberOfCustomers()== 1, "Customer added");
@@ -88,6 +89,102 @@ public class Tests extends AbstractFactoryClient {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void processMoneyPurchase() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(),100);
+        }
+        catch (OwnerNotRegisteredException e){
+        }
+        catch (OwnerAlreadyRegisteredException e){
+        }
+        ILoyaltyCard loyaltyCard;
+        for (int i = 0; i<loyaltyCardOperator.loyaltyCards.size(); i++){
+            if (loyaltyCardOperator.loyaltyCards.get(i).getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
+                loyaltyCard = loyaltyCardOperator.loyaltyCards.get(i);
+                assertFalse(loyaltyCard.getNumberOfPoints()!=1);
+            }
+        }
+    }
+
+    @Test
+    public void processMoneyPurchaseUnregistered() {
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(),100);
+        }
+        catch (OwnerNotRegisteredException e){
+            exceptionThrown = true;
+        }
+        assertFalse(exceptionThrown == false);
+    }
+
+    @Test
+    public void processPointsPurchase() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(),1000);
+            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(), 5);
+        }
+        catch (OwnerNotRegisteredException e){
+        }
+        catch (OwnerAlreadyRegisteredException e){
+        }
+        catch (InsufficientPointsException e) {
+        }
+        ILoyaltyCard loyaltyCard;
+        for (int i = 0; i<loyaltyCardOperator.loyaltyCards.size(); i++){
+            if (loyaltyCardOperator.loyaltyCards.get(i).getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
+                loyaltyCard = loyaltyCardOperator.loyaltyCards.get(i);
+                assertFalse(loyaltyCard.getNumberOfPoints()!=5);
+                assertFalse(loyaltyCard.getNumberOfUses() != 1);
+            }
+        }
+    }
+
+    @Test
+    public void spendInsufficientpoints(){
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(),100);
+        }
+        catch (OwnerNotRegisteredException e){
+        }
+        catch (OwnerAlreadyRegisteredException e){
+        }
+        catch (InsufficientPointsException e){
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+
+    }
+
+    @Test
+    public void processPointsPurchaseUnregistered() {
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(),100);
+        }
+        catch (InsufficientPointsException e){
+        }
+        catch (OwnerNotRegisteredException e){
+            exceptionThrown = true;
+        }
+        assertFalse(exceptionThrown == false);
+    }
+
+    @Test
+    public void getCustomers(){
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            assertFalse(loyaltyCardOperator.getNumberOfCustomers()!=1);
+        }
+        catch (OwnerAlreadyRegisteredException e){
+        }
     }
 
     @Test
@@ -205,5 +302,7 @@ public class Tests extends AbstractFactoryClient {
         }
         assertFalse(exceptionThrown == false);
     }
+
+
 
 }
