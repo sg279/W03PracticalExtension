@@ -20,10 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  */
 public class Tests extends AbstractFactoryClient {
 
+    //Define a LoyaltyCardOperator and two ILoyaltyCardOwner properties
     private LoyaltyCardOperator loyaltyCardOperator;
     private ILoyaltyCardOwner loyaltyCardOwner;
     private ILoyaltyCardOwner loyaltyCardOwner2;
 
+    //Before each test set the loyaltyCardOperator and loyaltyCardOwner properties to new instances of the operator and owner classes respectively
     @BeforeEach
     public void createOperator() {
         this.loyaltyCardOperator = new LoyaltyCardOperator();
@@ -39,6 +41,7 @@ public class Tests extends AbstractFactoryClient {
         ILoyaltyCardOwner loyaltyCardOwner = getFactory().makeLoyaltyCardOwner("jon@jon.com", "Jon");
         assertFalse(loyaltyCardOwner == null);
     }
+
 
     @Test
     public void registerOwner() {

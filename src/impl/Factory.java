@@ -37,13 +37,13 @@ public final class Factory implements IFactory {
 
     @Override
     public ILoyaltyCard makeLoyaltyCard(ILoyaltyCardOwner loyaltyCardOwner) {
-        // TODO Auto-generated method stub
-        return null;
+        LoyaltyCard loyaltyCard = new LoyaltyCard(loyaltyCardOwner);
+        return loyaltyCard;
     }
 
     @Override
     public ILoyaltyCardOperator makeLoyaltyCardOperator() {
-        // TODO Auto-generated method stub
-        return null;
+        LoyaltyCardOperator loyaltyCardOperator = new LoyaltyCardOperator();
+        return loyaltyCardOperator;
     }
 }
