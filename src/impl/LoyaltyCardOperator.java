@@ -17,29 +17,39 @@ import java.util.ArrayList;
  */
 public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyaltyCardOperator {
 
-    public ArrayList<LoyaltyCard> loyaltyCards = new ArrayList<LoyaltyCard>();
+    //Instantiate an array of LoyaltyCard objects as a property called loyaltyCards
+    private ArrayList<ILoyaltyCard> loyaltyCards = new ArrayList<ILoyaltyCard>();
 
     @Override
     public void registerOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerAlreadyRegisteredException {
-        for (LoyaltyCard loyaltyCard:
+        //For each loyalty card in the array, if the card's owner's email address is the same as the email address of the owner parsed as a parameter
+        //throw OwnerAlreadyRegisteredException
+        for (ILoyaltyCard loyaltyCard:
                 loyaltyCards
              ) {
             if(loyaltyCard.getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
                 throw new OwnerAlreadyRegisteredException();
             }
         }
-        loyaltyCards.add(new LoyaltyCard(getFactory().makeLoyaltyCardOwner(loyaltyCardOwner.getEmail(), loyaltyCardOwner.getName())));
+        //Add a loyalty card to the array, calling the factory to make a new ILoyaltyCard
+        loyaltyCards.add(getFactory().makeLoyaltyCard(loyaltyCardOwner));
     }
 
     @Override
     public void unregisterOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerNotRegisteredException {
+        //Instantiate a boolean called ownerRegistered as false
         boolean ownerRegistered = false;
+        //For each item in the loyaltyCards array do the following
         for (int i = 0; i<loyaltyCards.size(); i++) {
+            //If the loyalty card's owner's email is the same as the email of the owner parsed as a parameter do the following
             if(loyaltyCards.get(i).getOwner().getEmail().equals(loyaltyCardOwner.getEmail())){
+                //Remove the loyalty card from the array
                 loyaltyCards.remove(i);
+                //set ownerRegistered to true
                 ownerRegistered = true;
             }
         }
+        //If ownerRegistered is false, throw OwnerNotRegisteredException
         if (!ownerRegistered){
             throw new OwnerNotRegisteredException();
         }
@@ -47,15 +57,20 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
 
     @Override
     public void processMoneyPurchase(String ownerEmail, int pence) throws OwnerNotRegisteredException {
+        //Instantiate a boolean called ownerRegistered as false
         boolean ownerRegistered = false;
-        for (LoyaltyCard loyaltyCard:
+        //For each loyaltyCard in the loyaltyCards property, do the following
+        for (ILoyaltyCard loyaltyCard:
                 loyaltyCards
                 ) {
+            //If the loyalty card's owner's email is the same as the email parsed as a parameter, add the amount
+            //spent divided by 100 to the card's points property and set ownerRegistered to true
             if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
                 loyaltyCard.addPoints(pence/100);
                 ownerRegistered = true;
             }
         }
+        //If ownerRegistered is false, throw OwnerNotRegisteredException
         if (!ownerRegistered){
             throw new OwnerNotRegisteredException();
         }
@@ -64,8 +79,10 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     @Override
     public void processPointsPurchase(String ownerEmail, int pence)
             throws InsufficientPointsException, OwnerNotRegisteredException {
+        //Instantiate a boolean called ownerRegistered as false
         boolean ownerRegistered = false;
-        for (LoyaltyCard loyaltyCard:
+        //For each loyalty card in the loyaltyCards property do the following
+        for (ILoyaltyCard loyaltyCard:
                 loyaltyCards
                 ) {
             if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
@@ -86,7 +103,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     @Override
     public int getTotalNumberOfPoints() {
         int numberOfPoints = 0;
-        for (LoyaltyCard loyaltyCard:
+        for (ILoyaltyCard loyaltyCard:
                 loyaltyCards
                 ) {
             numberOfPoints+=loyaltyCard.getNumberOfPoints();
@@ -98,7 +115,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     public int getNumberOfPoints(String ownerEmail) throws OwnerNotRegisteredException {
         boolean ownerRegistered = false;
         int numberOfPoints=0;
-        for (LoyaltyCard loyaltyCard:
+        for (ILoyaltyCard loyaltyCard:
                 loyaltyCards
                 ) {
             if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
@@ -116,7 +133,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     public int getNumberOfUses(String ownerEmail) throws OwnerNotRegisteredException {
         boolean ownerRegistered = false;
         int numberOfUses=0;
-        for (LoyaltyCard loyaltyCard:
+        for (ILoyaltyCard loyaltyCard:
                 loyaltyCards
                 ) {
             if(loyaltyCard.getOwner().getEmail().equals(ownerEmail)){
@@ -136,8 +153,8 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
             throw new OwnerNotRegisteredException();
         }
         else {
-            LoyaltyCard mostUsed = loyaltyCards.get(0);
-            for (LoyaltyCard loyaltyCard:
+            ILoyaltyCard mostUsed = loyaltyCards.get(0);
+            for (ILoyaltyCard loyaltyCard:
                     loyaltyCards
             ) {
                 if(loyaltyCard.getNumberOfUses()>mostUsed.getNumberOfUses()){
