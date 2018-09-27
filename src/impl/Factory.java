@@ -31,19 +31,25 @@ public final class Factory implements IFactory {
 
     @Override
     public ILoyaltyCardOwner makeLoyaltyCardOwner(String email, String name) {
+        //Create a new LoyaltyCardOwner called loyaltyCardOwner by calling the LoyaltyCardOwner constructor with the email and string parameters parsed as parameters
         LoyaltyCardOwner loyaltyCardOwner = new LoyaltyCardOwner(email, name);
+        //Return the loyaltyCardOwner
         return loyaltyCardOwner;
     }
 
     @Override
     public ILoyaltyCard makeLoyaltyCard(ILoyaltyCardOwner loyaltyCardOwner) {
+        //Create a new LoyaltyCard called loyaltyCard by calling the LoyaltyCard constructor with the ILoyaltyCard parameter parsed as a parameter
         LoyaltyCard loyaltyCard = new LoyaltyCard(loyaltyCardOwner);
+        //Return the loyaltyCard
         return loyaltyCard;
     }
 
     @Override
     public ILoyaltyCardOperator makeLoyaltyCardOperator() {
+        //Create a new LoyaldyCardOperator called loyaltyCardOperator by calling the LoyaltyCardOperator constructor
         LoyaltyCardOperator loyaltyCardOperator = new LoyaltyCardOperator();
+        //Return the loyaltyCardOperator
         return loyaltyCardOperator;
     }
 }
