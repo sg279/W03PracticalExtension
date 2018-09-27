@@ -34,24 +34,24 @@ public class LoyaltyCard implements ILoyaltyCard {
 
     @Override
     public void addPoints(int points) {
-        this.numberOfPoints+=points;
+        this.numberOfPoints += points;
     }
 
     @Override
     public void usePoints(int points) throws InsufficientPointsException {
-        if (points>numberOfPoints){
+        if (points > numberOfPoints) {
             throw new InsufficientPointsException();
         }
-        else{
-            this.numberOfPoints-=points;
+        else {
+            this.numberOfPoints -= points;
             this.numberOfUses++;
         }
     }
 
     public LoyaltyCard(ILoyaltyCardOwner loyaltyCardOwner) {
-        this.loyaltyCardOwner=loyaltyCardOwner;
-        this.numberOfUses=0;
-        this.numberOfPoints=0;
+        this.loyaltyCardOwner = loyaltyCardOwner;
+        this.numberOfUses = 0;
+        this.numberOfPoints = 0;
     }
 
 }

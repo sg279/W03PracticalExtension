@@ -12,9 +12,9 @@ public class LoyaltyCardOwner implements ILoyaltyCardOwner {
 
     private String name;
 
-    public LoyaltyCardOwner(String email, String name){
-        this.email=email;
-        this.name=name;
+    public LoyaltyCardOwner(String email, String name) {
+        this.email = email;
+        this.name = name;
     }
 
     @Override

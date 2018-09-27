@@ -50,9 +50,9 @@ public class Tests extends AbstractFactoryClient {
     public void registerOwner() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
-            assertTrue(loyaltyCardOperator.getNumberOfCustomers()== 1, "Customer added");
+            assertTrue(loyaltyCardOperator.getNumberOfCustomers() == 1, "Customer added");
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
 
         }
     }
@@ -67,7 +67,7 @@ public class Tests extends AbstractFactoryClient {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
@@ -82,11 +82,11 @@ public class Tests extends AbstractFactoryClient {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.unregisterOwner(loyaltyCardOwner);
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        assertFalse(loyaltyCardOperator.getNumberOfCustomers()!=0);
+        assertFalse(loyaltyCardOperator.getNumberOfCustomers() != 0);
     }
 
     /**
@@ -98,7 +98,7 @@ public class Tests extends AbstractFactoryClient {
         try {
             loyaltyCardOperator.unregisterOwner(loyaltyCardOwner);
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
@@ -111,12 +111,12 @@ public class Tests extends AbstractFactoryClient {
     public void processMoneyPurchase() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
-            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(),100);
-            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail())!=1);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 100);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 1);
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
     }
 
@@ -127,12 +127,12 @@ public class Tests extends AbstractFactoryClient {
     public void processMoneyPurchaseUnregistered() {
         boolean exceptionThrown = false;
         try {
-            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(),100);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 100);
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
             exceptionThrown = true;
         }
-        assertTrue(exceptionThrown);;
+        assertTrue(exceptionThrown);
     }
 
     /**
@@ -143,14 +143,14 @@ public class Tests extends AbstractFactoryClient {
     public void processPointsPurchase() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
-            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(),1000);
-            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(), 5);
-            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail())!=5);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 1000);
+            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(),  5);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 5);
             assertFalse(loyaltyCardOperator.getNumberOfUses(loyaltyCardOwner.getEmail()) != 1);
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
         catch (InsufficientPointsException e) {
         }
@@ -160,17 +160,17 @@ public class Tests extends AbstractFactoryClient {
      * This tests that if the processPointsPurchase method is called for an owner with insufficient points, InsufficientPointsException is thrown
      */
     @Test
-    public void spendInsufficientPoints(){
+    public void spendInsufficientPoints() {
         boolean exceptionThrown = false;
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
-            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(),100);
+            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(), 100);
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (InsufficientPointsException e){
+        catch (InsufficientPointsException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
@@ -184,11 +184,11 @@ public class Tests extends AbstractFactoryClient {
     public void processPointsPurchaseUnregistered() {
         boolean exceptionThrown = false;
         try {
-            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(),100);
+            loyaltyCardOperator.processPointsPurchase(loyaltyCardOwner.getEmail(), 100);
         }
-        catch (InsufficientPointsException e){
+        catch (InsufficientPointsException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
@@ -198,12 +198,12 @@ public class Tests extends AbstractFactoryClient {
      * This tests that the getNumberOfCustomers method get's the correct number of customers
      */
     @Test
-    public void getCustomers(){
+    public void getCustomers() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
-            assertFalse(loyaltyCardOperator.getNumberOfCustomers()!=1);
+            assertFalse(loyaltyCardOperator.getNumberOfCustomers() != 1);
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
     }
 
@@ -211,17 +211,17 @@ public class Tests extends AbstractFactoryClient {
      * This tests that the getTotalPoints method returns the correct number of total points
      */
     @Test
-    public void getTotalPoints(){
+    public void getTotalPoints() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.registerOwner(loyaltyCardOwner2);
             loyaltyCardOperator.processMoneyPurchase("jon@jon.com", 1000);
             loyaltyCardOperator.processMoneyPurchase("bill@bill.com", 2000);
-            assertFalse(loyaltyCardOperator.getTotalNumberOfPoints()!=30);
+            assertFalse(loyaltyCardOperator.getTotalNumberOfPoints() != 30);
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
     }
 
@@ -229,15 +229,15 @@ public class Tests extends AbstractFactoryClient {
      * This tests that the getPoints method returns the correct number of points
      */
     @Test
-    public void getPoints(){
+    public void getPoints() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.processMoneyPurchase("jon@jon.com", 1000);
-            assertFalse(loyaltyCardOperator.getNumberOfPoints("jon@jon.com")!=10);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints("jon@jon.com") != 10);
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
     }
 
@@ -245,12 +245,12 @@ public class Tests extends AbstractFactoryClient {
      * This tests that if the getPoints method is called for an owner that isn't registered, OwnerNotRegisteredException is thrown
      */
     @Test
-    public void getPointsUnregistered(){
+    public void getPointsUnregistered() {
         boolean exceptionThrown = false;
         try {
             loyaltyCardOperator.getNumberOfPoints("jon@jon.com");
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
@@ -260,18 +260,18 @@ public class Tests extends AbstractFactoryClient {
      * This tests that the getNumberOfUses method returns the correct number of uses
      */
     @Test
-    public void getNumberOfUses(){
-        try {
+    public void getNumberOfUses()  {
+        try  {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.processMoneyPurchase("jon@jon.com", 1000);
             loyaltyCardOperator.processPointsPurchase("jon@jon.com", 10);
-            assertFalse(loyaltyCardOperator.getNumberOfUses("jon@jon.com")!=1);
+            assertFalse(loyaltyCardOperator.getNumberOfUses("jon@jon.com") != 1);
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        catch (InsufficientPointsException e){
+        catch (InsufficientPointsException e) {
         }
     }
 
@@ -279,12 +279,12 @@ public class Tests extends AbstractFactoryClient {
      * This tests that if the getNumberOfUses method is called for an owner that isn't registered, OwnerNotRegisteredException is thrown
      */
     @Test
-    public void getNumberOfUsesUnregistered(){
+    public void getNumberOfUsesUnregistered() {
         boolean exceptionThrown = false;
         try {
             loyaltyCardOperator.getNumberOfUses("jon@jon.com");
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
@@ -294,19 +294,19 @@ public class Tests extends AbstractFactoryClient {
      * This checks that the getMostUsed method returns the correct owner
      */
     @Test
-    public void getMostUsed(){
+    public void getMostUsed() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.registerOwner(loyaltyCardOwner2);
             loyaltyCardOperator.processMoneyPurchase("jon@jon.com", 1000);
             loyaltyCardOperator.processPointsPurchase("jon@jon.com", 10);
-            assertFalse(loyaltyCardOperator.getMostUsed().getEmail()!=loyaltyCardOwner.getEmail());
+            assertFalse(loyaltyCardOperator.getMostUsed().getEmail() != loyaltyCardOwner.getEmail());
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        catch (InsufficientPointsException e){
+        catch (InsufficientPointsException e) {
         }
     }
 
@@ -314,7 +314,7 @@ public class Tests extends AbstractFactoryClient {
      * This checks that the getMostUsed2 method returns the first owner if there are multiple with the most uses
      */
     @Test
-    public void getMostUsed2(){
+    public void getMostUsed2() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.registerOwner(loyaltyCardOwner2);
@@ -322,13 +322,13 @@ public class Tests extends AbstractFactoryClient {
             loyaltyCardOperator.processMoneyPurchase("bill@bill.com", 2000);
             loyaltyCardOperator.processPointsPurchase("jon@jon.com", 10);
             loyaltyCardOperator.processPointsPurchase("bill@bill.com", 10);
-            assertFalse(loyaltyCardOperator.getMostUsed().getEmail()!=loyaltyCardOwner.getEmail());
+            assertFalse(loyaltyCardOperator.getMostUsed().getEmail() != loyaltyCardOwner.getEmail());
         }
-        catch (OwnerAlreadyRegisteredException e){
+        catch (OwnerAlreadyRegisteredException e) {
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
         }
-        catch (InsufficientPointsException e){
+        catch (InsufficientPointsException e) {
         }
     }
 
@@ -336,12 +336,12 @@ public class Tests extends AbstractFactoryClient {
      * This tests that the getMostUsed method throws OwnerNotRegisteredException if there are no registered owners
      */
     @Test
-    public void getMostUsedException(){
+    public void getMostUsedException() {
         boolean exceptionThrown = false;
         try {
             loyaltyCardOperator.getMostUsed();
         }
-        catch (OwnerNotRegisteredException e){
+        catch (OwnerNotRegisteredException e) {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
