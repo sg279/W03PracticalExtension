@@ -22,17 +22,24 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
 
     @Override
     public void registerOwner(ILoyaltyCardOwner loyaltyCardOwner) throws OwnerAlreadyRegisteredException {
-        //For each loyalty card in the array, if the card's owner's email address is the same as the email address of the owner parsed as a parameter
-        //throw OwnerAlreadyRegisteredException
-        for (ILoyaltyCard loyaltyCard
-                : loyaltyCards
-             ) {
-            if (loyaltyCard.getOwner().getEmail().equals(loyaltyCardOwner.getEmail())) {
-                throw new OwnerAlreadyRegisteredException();
+        //Checks that the loyaltyCardOwner isn't null
+        if (loyaltyCardOwner != null) {
+            //For each loyalty card in the array, if the card's owner's email address is the same as the email address of the owner parsed as a parameter
+            //throw OwnerAlreadyRegisteredException
+            for (ILoyaltyCard loyaltyCard
+                    : loyaltyCards
+            ) {
+                if (loyaltyCard.getOwner().getEmail().equals(loyaltyCardOwner.getEmail())) {
+                    throw new OwnerAlreadyRegisteredException();
+                }
             }
+            //Add a loyalty card to the array, calling the factory to make a new ILoyaltyCard
+            loyaltyCards.add(getFactory().makeLoyaltyCard(loyaltyCardOwner));
         }
-        //Add a loyalty card to the array, calling the factory to make a new ILoyaltyCard
-        loyaltyCards.add(getFactory().makeLoyaltyCard(loyaltyCardOwner));
+        //Otherwise, throw a null pointer exception
+        else {
+            throw new NullPointerException();
+        }
     }
 
     @Override

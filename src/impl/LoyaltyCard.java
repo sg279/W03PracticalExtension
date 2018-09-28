@@ -56,7 +56,7 @@ public class LoyaltyCard implements ILoyaltyCard {
     public LoyaltyCard(ILoyaltyCardOwner loyaltyCardOwner) {
         //Set the loyaltyCardOwner property to the loyaltyCardOwner parameter
         this.loyaltyCardOwner = loyaltyCardOwner;
-        //Set the numnerOfUses and numberOfPoints properties to 0
+        //Set the numberOfUses and numberOfPoints properties to 0
         this.numberOfUses = 0;
         this.numberOfPoints = 0;
     }

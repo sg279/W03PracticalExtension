@@ -44,17 +44,55 @@ public class Tests extends AbstractFactoryClient {
     }
 
     /**
-     * This checks that the card operator can register an owner using the getNumberOfCustomers method
+     * This checks that the card operator can register an owner
      */
     @Test
     public void registerOwner() {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
-            assertTrue(loyaltyCardOperator.getNumberOfCustomers() == 1, "Customer added");
+            assertTrue(loyaltyCardOperator.getNumberOfCustomers() == 1);
         }
         catch (OwnerAlreadyRegisteredException e) {
 
         }
+    }
+
+    /**
+     * This checks that the card operator can't register an owner if the parameters are null and that an exception is thrown
+     */
+    @Test
+    public void registerOwnerNullValues() {
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.registerOwner(getFactory().makeLoyaltyCardOwner(null,null));
+            assertFalse(loyaltyCardOperator.getNumberOfCustomers() == 1);
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+
+        }
+        catch (NullPointerException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
+
+    /**
+     * This checks that the card operator can't register an owner if the owner object is null and an exception is thrown
+     */
+    @Test
+    public void registerOwnerNull() {
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.registerOwner(null);
+            assertFalse(loyaltyCardOperator.getNumberOfCustomers() == 1);
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+
+        }
+        catch (NullPointerException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
     }
 
     /**

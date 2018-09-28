@@ -13,9 +13,16 @@ public class LoyaltyCardOwner implements ILoyaltyCardOwner {
     private String name;
 
     public LoyaltyCardOwner(String email, String name) {
-        //Set the email and name properties to the email and name parameters
-        this.email = email;
-        this.name = name;
+        //Check that the name and email parameters aren't null
+        if (email != null && name != null) {
+            //Set the email and name properties to the email and name parameters
+            this.email = email;
+            this.name = name;
+        }
+        //Otherwise, throw a null pointer exception
+        else {
+            throw new NullPointerException();
+        }
     }
 
     @Override
