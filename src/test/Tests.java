@@ -44,6 +44,21 @@ public class Tests extends AbstractFactoryClient {
     }
 
     /**
+     * This checks that an owner can't be created if the values parsed are null and that an exception is through
+     */
+    @Test
+    public void createOwnerNullValues() {
+        boolean exceptionThrown = false;
+        try {
+            ILoyaltyCardOwner nullOwner = getFactory().makeLoyaltyCardOwner(null,null);
+        }
+        catch (NullPointerException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
+
+    /**
      * This checks that the card operator can register an owner
      */
     @Test
@@ -55,25 +70,6 @@ public class Tests extends AbstractFactoryClient {
         catch (OwnerAlreadyRegisteredException e) {
 
         }
-    }
-
-    /**
-     * This checks that the card operator can't register an owner if the parameters are null and that an exception is thrown
-     */
-    @Test
-    public void registerOwnerNullValues() {
-        boolean exceptionThrown = false;
-        try {
-            loyaltyCardOperator.registerOwner(getFactory().makeLoyaltyCardOwner(null,null));
-            assertFalse(loyaltyCardOperator.getNumberOfCustomers() == 1);
-        }
-        catch (OwnerAlreadyRegisteredException e) {
-
-        }
-        catch (NullPointerException e) {
-            exceptionThrown = true;
-        }
-        assertTrue(exceptionThrown);
     }
 
     /**
