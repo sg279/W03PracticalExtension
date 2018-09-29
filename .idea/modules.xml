@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/W03Practical.iml" filepath="$PROJECT_DIR$/W03Practical.iml" />
+      <module fileurl="file://$PROJECT_DIR$/W03PracticalExtension.iml" filepath="$PROJECT_DIR$/W03PracticalExtension.iml" />
     </modules>
   </component>
 </project>
