@@ -1,9 +1,6 @@
 package impl;
 
-import interfaces.IFactory;
-import interfaces.ILoyaltyCard;
-import interfaces.ILoyaltyCardOperator;
-import interfaces.ILoyaltyCardOwner;
+import interfaces.*;
 
 
 /**
@@ -51,5 +48,11 @@ public final class Factory implements IFactory {
         LoyaltyCardOperator loyaltyCardOperator = new LoyaltyCardOperator();
         //Return the loyaltyCardOperator
         return loyaltyCardOperator;
+    }
+
+    @Override
+    public IProduct makeProduct(String name) {
+        Product product = new Product(name);
+        return product;
     }
 }

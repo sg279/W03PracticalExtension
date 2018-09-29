@@ -31,5 +31,12 @@ public interface IFactory {
      */
     ILoyaltyCardOperator makeLoyaltyCardOperator();
 
+    /**
+     * Creates an instance of {@Link IProduct}
+     * @param name the name of the product
+     * @return the Product
+     */
+    IProduct makeProduct(String name);
+
 
 }
