@@ -52,7 +52,17 @@ public final class Factory implements IFactory {
 
     @Override
     public IProduct makeProduct(String name) {
+        //Create a new product object called product by calling the product constructor with name as a parameter
         Product product = new Product(name);
+        //Return the product object
+        return product;
+    }
+
+    @Override
+    public IProduct makeProduct(String name, double promotion) {
+        //Create a new product object called product by calling the product constructor with name and promotion parsed as parameters
+        Product product = new Product(name, promotion);
+        //Return the product object
         return product;
     }
 }

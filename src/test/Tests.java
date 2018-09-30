@@ -8,6 +8,7 @@ import impl.LoyaltyCardOperator;
 import interfaces.ILoyaltyCardOperator;
 import interfaces.ILoyaltyCardOwner;
 import interfaces.ILoyaltyCard;
+import interfaces.IProduct;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -381,6 +382,137 @@ public class Tests extends AbstractFactoryClient {
         assertTrue(exceptionThrown);
     }
 
+    /**
+     * This tests that the processMoneyPurchase method called with a product that has a promotion adds the correct amount of loyalty points
+     */
+    @Test
+    public void processMoneyPurchasePromotion() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 1000, getFactory().makeProduct("TV", 1.5));
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 15);
+        }
+        catch (OwnerNotRegisteredException e) {
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+        }
+    }
 
+    /**
+     * This tests that the processMoneyPurchase method called with a null object as a product adds the default amount of loyalty points and doesn't throw an exception
+     */
+    @Test
+    public void processMoneyPurchaseNullPromotion() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 1000, null);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 10);
+        }
+        catch (OwnerNotRegisteredException e) {
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+        }
+    }
+
+    //This tests that creating a product with an invalid promotion property throws an IllegalArgumentException
+    @Test
+    public void promotionException() {
+        boolean exceptionThrown = false;
+        try {
+            IProduct product = getFactory().makeProduct("test", -1);
+        }
+        catch (IllegalArgumentException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
+
+    //This tests that setting a product's promotion value to an invalid amount throws an IllegalArgumentException
+    @Test
+    public void setPromotionException() {
+        boolean exceptionThrown = false;
+        try {
+            IProduct product = getFactory().makeProduct("test");
+            product.setPromotion(-1);
+        }
+        catch (IllegalArgumentException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
+
+    //This tests that calling the processMoneyPurchase with a points parameter causes the number of points to be removed from the card and the number of points added
+    //to be based on the price with the points used subtracted
+    @Test
+    void processPartialPointsPurchase() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 1000);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 205, 5);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 7);
+        }
+        catch (OwnerNotRegisteredException e) {
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+        }
+        catch (InsufficientPointsException e) {
+        }
+    }
+
+    //This tests that calling the processMoneyPurchase with a points parameter that is greater than the cost of the item causes
+    //no points to be added to the card and the price of the item purchased to be subtracted from the points on the card
+    @Test
+    void processPartialPointsPurchase2() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 100);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 5, 6);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 1);
+        }
+        catch (OwnerNotRegisteredException e) {
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+        }
+        catch (InsufficientPointsException e) {
+        }
+    }
+
+    //This tests that calling the processMoneyPurchase with a points and product parameter causes the number of points to be removed from the card and the number of points added
+    //to be based on the price with the points used subtracted multiplied by the promotion
+    @Test
+    void processPartialPointsPurchase3() {
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 1000);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 205,getFactory().makeProduct("test", 2), 5);
+            assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 9);
+        }
+        catch (OwnerNotRegisteredException e) {
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+        }
+        catch (InsufficientPointsException e) {
+        }
+    }
+
+    //This tests that calling the processMoneyPurchase method with a points parameter that is greater than the number of points on the card causes
+    //an InsufficientPointsException to be thrown
+    @Test
+    void processPartialPointsPurchaseInsufficient() {
+        boolean exceptionThrown = false;
+        try {
+            loyaltyCardOperator.registerOwner(loyaltyCardOwner);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 100);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 205, 5);
+        }
+        catch (OwnerNotRegisteredException e) {
+        }
+        catch (OwnerAlreadyRegisteredException e) {
+        }
+        catch (InsufficientPointsException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
 
 }

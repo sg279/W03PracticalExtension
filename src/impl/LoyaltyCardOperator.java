@@ -7,6 +7,7 @@ import common.OwnerNotRegisteredException;
 import interfaces.ILoyaltyCard;
 import interfaces.ILoyaltyCardOperator;
 import interfaces.ILoyaltyCardOwner;
+import interfaces.IProduct;
 
 import java.util.ArrayList;
 
@@ -75,6 +76,101 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
             if (loyaltyCard.getOwner().getEmail().equals(ownerEmail)) {
                 loyaltyCard.addPoints(pence / 100);
                 ownerRegistered = true;
+            }
+        }
+        //If ownerRegistered is false, throw OwnerNotRegisteredException
+        if (!ownerRegistered) {
+            throw new OwnerNotRegisteredException();
+        }
+    }
+
+    @Override
+    public void processMoneyPurchase(String ownerEmail, int pence, IProduct product) throws OwnerNotRegisteredException {
+        //Instantiate a double called promotion as 1
+        double promotion=1;
+        //If the product parameter isn't null set the promotion value to the promotion property of the product object
+        if (product != null){
+            promotion = product.getPromotion();
+        }
+        //Instantiate a boolean called ownerRegistered as false
+        boolean ownerRegistered = false;
+        //For each loyaltyCard in the loyaltyCards property, do the following
+        for (ILoyaltyCard loyaltyCard
+                : loyaltyCards
+        ) {
+            //If the loyalty card's owner's email is the same as the email parsed as a parameter, add the amount
+            //spent multiplied by the promotion divided by 100 to the card's points property and set ownerRegistered to true
+            if (loyaltyCard.getOwner().getEmail().equals(ownerEmail)) {
+                loyaltyCard.addPoints((int)(pence * promotion / 100));
+                ownerRegistered = true;
+            }
+        }
+        //If ownerRegistered is false, throw OwnerNotRegisteredException
+        if (!ownerRegistered) {
+            throw new OwnerNotRegisteredException();
+        }
+    }
+
+    @Override
+    public void processMoneyPurchase(String ownerEmail, int pence, IProduct product, int points) throws OwnerNotRegisteredException, InsufficientPointsException {
+        //Instantiate a double called promotion as 1
+        double promotion=1;
+        //If the product parameter isn't null set the promotion value to the promotion property of the product object
+        if (product != null){
+            promotion = product.getPromotion();
+        }
+        //Instantiate a boolean called ownerRegistered as false
+        boolean ownerRegistered = false;
+        //For each loyaltyCard in the loyaltyCards property, do the following
+        for (ILoyaltyCard loyaltyCard
+                : loyaltyCards
+        ) {
+            //If the loyalty card's owner's email is the same as the email parsed as a parameter, do the following
+            if (loyaltyCard.getOwner().getEmail().equals(ownerEmail)) {
+                //If the number of points used is enough to cover the whole purchase, call the usePoints method with the price of the item parsed as a parameter
+                if (points > pence) {
+                    loyaltyCard.usePoints(pence);
+                    ownerRegistered = true;
+                }
+                //Otherwise, subtract the points used, add the amount spent minus the discount from the points multiplied by the promotion divided by
+                // 100 to the card's points property, and set ownerRegistered to true
+                else {
+                    loyaltyCard.usePoints(points);
+                    loyaltyCard.addPoints((int)((pence-points) * promotion / 100));
+                    ownerRegistered = true;
+                }
+
+            }
+        }
+        //If ownerRegistered is false, throw OwnerNotRegisteredException
+        if (!ownerRegistered) {
+            throw new OwnerNotRegisteredException();
+        }
+    }
+
+    @Override
+    public void processMoneyPurchase(String ownerEmail, int pence, int points) throws OwnerNotRegisteredException, InsufficientPointsException {
+        //Instantiate a boolean called ownerRegistered as false
+        boolean ownerRegistered = false;
+        //For each loyaltyCard in the loyaltyCards property, do the following
+        for (ILoyaltyCard loyaltyCard
+                : loyaltyCards
+        ) {
+            //If the loyalty card's owner's email is the same as the email parsed as a parameter, do the following
+            if (loyaltyCard.getOwner().getEmail().equals(ownerEmail)) {
+                //If the number of points used is enough to cover the whole purchase, call the usePoints method with the price of the item parsed as a parameter
+                if (points > pence) {
+                    loyaltyCard.usePoints(pence);
+                    ownerRegistered = true;
+                }
+                //Otherwise, subtract the points used, add the amount spent minus the discount from the points divided by
+                // 100 to the card's points property, and set ownerRegistered to true
+                else {
+                    loyaltyCard.usePoints(points);
+                    loyaltyCard.addPoints((int)((pence-points) / 100));
+                    ownerRegistered = true;
+                }
+
             }
         }
         //If ownerRegistered is false, throw OwnerNotRegisteredException

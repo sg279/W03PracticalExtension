@@ -7,7 +7,7 @@ public interface IProduct {
      * of points added will be multiplied by 1.5)
      * @return The multiplier for the points to be added
      */
-    float getPromotion();
+    double getPromotion();
 
     /**
      * Returns the name of the product
@@ -19,5 +19,5 @@ public interface IProduct {
      * Sets the extra points promotion for the product
      * @param promotion the multiplier for points that are added to a loyalty card
      */
-    void setPromotion(float promotion);
+    void setPromotion(double promotion);
 }

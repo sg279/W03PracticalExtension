@@ -28,6 +28,35 @@ public interface ILoyaltyCardOperator {
 
 
     /**
+     * Processes a monetary purchase for the specified owner and price and adds pence/100 points multiplied by a promotion if one exists to the owners loyalty card.
+     * @param product the product that is being purchased
+     * @param ownerEmail the loyalty card owner's email
+     * @param pence the price of the purchase in pence
+     * @throws OwnerNotRegisteredException if the given owner's email is not registered
+     */
+    void processMoneyPurchase(String ownerEmail, int pence, IProduct product) throws OwnerNotRegisteredException;
+
+    /**
+     * Processes a monetary purchase for the specified owner and price and adds pence/100 points multiplied by a promotion if one exists to the owners loyalty card.
+     * @param points the number of points being applied to the purchase
+     * @param product the product that is being purchased
+     * @param ownerEmail the loyalty card owner's email
+     * @param pence the price of the purchase in pence
+     * @throws OwnerNotRegisteredException if the given owner's email is not registered
+     */
+    void processMoneyPurchase(String ownerEmail, int pence, IProduct product, int points) throws OwnerNotRegisteredException, InsufficientPointsException;
+
+    /**
+     * Processes a monetary purchase for the specified owner and price and adds pence/100 points multiplied by a promotion if one exists to the owners loyalty card.
+     * @param points the number of points being applied to the purchase
+     * @param ownerEmail the loyalty card owner's email
+     * @param pence the price of the purchase in pence
+     * @throws OwnerNotRegisteredException if the given owner's email is not registered
+     */
+    void processMoneyPurchase(String ownerEmail, int pence, int points) throws OwnerNotRegisteredException, InsufficientPointsException;
+
+
+    /**
      * Processes a monetary purchase for the specified owner and price and adds pence/100 points to the owners loyalty card.
      * @param ownerEmail the loyalty card owner's email
      * @param pence the price of the purchase in pence

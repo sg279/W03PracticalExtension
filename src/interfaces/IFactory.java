@@ -38,5 +38,13 @@ public interface IFactory {
      */
     IProduct makeProduct(String name);
 
+    /**
+     * Creates an instance of {@Link IProduct}
+     * @param name the name of the product
+     * @param promotion the promotion multiplier
+     * @return the Product
+     */
+    IProduct makeProduct(String name, double promotion);
+
 
 }
