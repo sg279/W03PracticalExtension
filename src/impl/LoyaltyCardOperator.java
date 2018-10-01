@@ -167,7 +167,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
                 // 100 to the card's points property, and set ownerRegistered to true
                 else {
                     loyaltyCard.usePoints(points);
-                    loyaltyCard.addPoints((int)((pence-points) / 100));
+                    loyaltyCard.addPoints(((pence-points) / 100));
                     ownerRegistered = true;
                 }
 
