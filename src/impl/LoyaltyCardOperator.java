@@ -87,9 +87,9 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     @Override
     public void processMoneyPurchase(String ownerEmail, int pence, IProduct product) throws OwnerNotRegisteredException {
         //Instantiate a double called promotion as 1
-        double promotion=1;
+        double promotion = 1;
         //If the product parameter isn't null set the promotion value to the promotion property of the product object
-        if (product != null){
+        if (product != null) {
             promotion = product.getPromotion();
         }
         //Instantiate a boolean called ownerRegistered as false
@@ -101,7 +101,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
             //If the loyalty card's owner's email is the same as the email parsed as a parameter, add the amount
             //spent multiplied by the promotion divided by 100 to the card's points property and set ownerRegistered to true
             if (loyaltyCard.getOwner().getEmail().equals(ownerEmail)) {
-                loyaltyCard.addPoints((int)(pence * promotion / 100));
+                loyaltyCard.addPoints((int) (pence * promotion / 100));
                 ownerRegistered = true;
             }
         }
@@ -114,9 +114,9 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     @Override
     public void processMoneyPurchase(String ownerEmail, int pence, IProduct product, int points) throws OwnerNotRegisteredException, InsufficientPointsException {
         //Instantiate a double called promotion as 1
-        double promotion=1;
+        double promotion =1 ;
         //If the product parameter isn't null set the promotion value to the promotion property of the product object
-        if (product != null){
+        if (product != null) {
             promotion = product.getPromotion();
         }
         //Instantiate a boolean called ownerRegistered as false
@@ -136,7 +136,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
                 // 100 to the card's points property, and set ownerRegistered to true
                 else {
                     loyaltyCard.usePoints(points);
-                    loyaltyCard.addPoints((int)((pence-points) * promotion / 100));
+                    loyaltyCard.addPoints((int) ((pence - points) * promotion / 100));
                     ownerRegistered = true;
                 }
 
@@ -167,7 +167,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
                 // 100 to the card's points property, and set ownerRegistered to true
                 else {
                     loyaltyCard.usePoints(points);
-                    loyaltyCard.addPoints(((pence-points) / 100));
+                    loyaltyCard.addPoints(((pence - points) / 100));
                     ownerRegistered = true;
                 }
 

@@ -21,7 +21,7 @@ public class Product implements IProduct {
     @Override
     public void setPromotion(double promotion) {
         //If the promotion parameter is more than 0 set the property to the value, otherwise throw an IllegalArgumentException
-        if (promotion >= 1){
+        if (promotion >= 1) {
             this.promotion = promotion;
         }
         else {
@@ -38,7 +38,7 @@ public class Product implements IProduct {
     //This constructor takes a promotion value as a parameter and so sets the promotion property to the parameter
     public Product(String name, double promotion) {
         //If the promotion parameter is more than 0 set the property to the value, otherwise throw an IllegalArgumentException
-        if (promotion >= 1){
+        if (promotion >= 1) {
             this.promotion = promotion;
             this.name = name;
         }

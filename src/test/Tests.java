@@ -51,7 +51,7 @@ public class Tests extends AbstractFactoryClient {
     public void createOwnerNullValues() {
         boolean exceptionThrown = false;
         try {
-            ILoyaltyCardOwner nullOwner = getFactory().makeLoyaltyCardOwner(null,null);
+            ILoyaltyCardOwner nullOwner = getFactory().makeLoyaltyCardOwner(null, null);
         }
         catch (NullPointerException e) {
             exceptionThrown = true;
@@ -484,7 +484,7 @@ public class Tests extends AbstractFactoryClient {
         try {
             loyaltyCardOperator.registerOwner(loyaltyCardOwner);
             loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 1000);
-            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 205,getFactory().makeProduct("test", 2), 5);
+            loyaltyCardOperator.processMoneyPurchase(loyaltyCardOwner.getEmail(), 205, getFactory().makeProduct("test", 2), 5);
             assertFalse(loyaltyCardOperator.getNumberOfPoints(loyaltyCardOwner.getEmail()) != 9);
         }
         catch (OwnerNotRegisteredException e) {
