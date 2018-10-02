@@ -114,7 +114,7 @@ public class LoyaltyCardOperator extends AbstractFactoryClient implements ILoyal
     @Override
     public void processMoneyPurchase(String ownerEmail, int pence, IProduct product, int points) throws OwnerNotRegisteredException, InsufficientPointsException {
         //Instantiate a double called promotion as 1
-        double promotion =1 ;
+        double promotion = 1;
         //If the product parameter isn't null set the promotion value to the promotion property of the product object
         if (product != null) {
             promotion = product.getPromotion();
